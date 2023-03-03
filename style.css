@@ -1,8 +1,21 @@
+<<<<<<< HEAD
 footer {
+=======
+
+.flotte {
+  float:left;
+  }
+footer {
+  
+>>>>>>> 29f10a4083b4eb3d81cf100581675d705d48ef02
   background-color: lightblue;
   text-align: right;
 }
 header {
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 29f10a4083b4eb3d81cf100581675d705d48ef02
   background-color: lightblue;
   text-align: center;
 }
@@ -24,7 +37,11 @@ div#content div{
 }
 body {
     background-color: #eee;
+<<<<<<< HEAD
   
+=======
+    font-family: garamond;
+>>>>>>> 29f10a4083b4eb3d81cf100581675d705d48ef02
   }
   /* Dropdown menu */
   .dropdownmenu {
