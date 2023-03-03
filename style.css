@@ -31,8 +31,9 @@ body {
 }
 /* Dropdown menu */
 .dropdownmenu {
+  font-size: 15pt;
   background-color: #666;
-  width: 140px; /* Largeur du menu */
+  width: 160px; /* Largeur du menu */
 }
 .dropdownmenu,
 .dropdownmenu ul {
@@ -53,7 +54,7 @@ body {
   /* On transforme les liens en bloc pour pouvoir les dimensionner */
   display: block;
   /* Dimensions des liens */
-  width: 120px;
+  width: 160px;
   height: 30px;
   line-height: 30px; /* Doit etre equivalent a la hauteur du menu pour centrer le texte verticalement */
   padding: 3px 10px;
