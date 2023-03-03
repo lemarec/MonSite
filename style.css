@@ -1,5 +1,36 @@
+
+.flotte {
+  float:left;
+  }
+footer {
+  
+  background-color: lightblue;
+  text-align: right;
+}
+header {
+  
+  background-color: lightblue;
+  text-align: center;
+}
+div#content div.BoiteGauche{
+  background-color: yellow;  
+  width: 70%;
+}
+div#content div.BoiteDroite{
+  vertical-align: top;
+  background-color: blue;
+  width: 10%;
+}
+div#content div.menu{
+  vertical-align: top;
+}
+div#content div{
+  display: inline-block;
+  
+}
 body {
     background-color: #eee;
+    font-family: garamond;
   }
   /* Dropdown menu */
   .dropdownmenu {
