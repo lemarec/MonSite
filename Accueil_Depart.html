@@ -7,7 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Bienvenue sur mon site dédié à l'univers Linux.</h1>
+    <h1><center>Bienvenue sur mon site dédié à l'univers Linux.</center></h1>
+    <center><img src="Linux & Windows Server.png" /></center>
     <p><h2>Vous trouverez ici des informations en lien avec la configuaration complète et la gestion d'un serveur Samba AD DC sous Linux (serveur de domaine Windows), aussi bien du coté serveur que du coté client.</h2></p>
     <p>
         <ul>
@@ -25,5 +26,36 @@
 
     <p><h2>Toutes les configurations proposées ici ont été testées sur un réseau virtualisé (Virtualbox/Proxmox) puis en réel sur un réseau de 20/30 postes .</h2>    
     </p>
+    <div class="line"></div>
+
+    <h1>Table des matières :</h1>
+    <ul><li>Préparer sa machine pour Samba 4 AD :</li>
+      <ul><li>&nbsp;Prérequis, données de base, nom machine, DNS, adresse IP, divers </li></ul>
+    </ul>
+    <ul><li>Installation de Samba 4 Active Directory AD DC :</li>
+      <ul><li>Modification du système de fichiers (ACL, attributs étendus), horloges synchronisées, création du Contrôleur de Domaine (DC)</li></ul>
+    </ul>
+    <ul><li>Configuration et intégration des clients Windows au domaine :</li>    
+      <ul><li>Comment préparer le mise en domaine et activer celui-ci.</li></ul>
+    </ul>
+    <ul><li>Installation des outils de gestion AD à distance (RSAT)</li>
+       <ul><li>&nbsp;Outils clients RSAT pour gérer à distance votre serveur, comptes réseau, partages, GPP, ...</li></ul>
+    </ul>
+    <ul><li>Gestion avancée du Domaine Windows</li>
+        <ul><li>Création des comptes et groupes du domaine, profiles itinérants, répertoires de travail, partages avancés, lecteurs réseaux, ...</li></ul>
+    </ul>
+    <ul><li>Résolution des problèmes</li></ul>
+    <ul><li>Quelques commandes utiles</li></ul>
+    <ul><li>Commandes principales de systemd</li></ul>
+    <ul><li>Configuration de test avec Virtualbox :</li></ul>
+    <ul><ul><li>Testez votre configuration, vos GPO, scripts, ... avant de les appliquer&nbsp; sur un site</li></ul>
+    </ul>
+    <ul><li>Divers</li></ul>
+    <ul><li>Contact /remarques</li></ul>
+
+A faire :
+backup de samba et tache cron, nettoyage de la base
+<p>Création 11/2020 Sur Ubuntu Mate 20.04</p>
+
 </body>
 </html>
