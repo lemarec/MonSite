@@ -8,6 +8,165 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Préparer sa machine pour Samba 4 AD</h1>Préparer sa machine pour Samba 4 AD
+    <h1>Préparer sa machine pour Samba 4 AD</h1>
+    Remarque :  Configuration basée sur : https://dev.tranquil.it/samba/fr/samba_config_server/debian/server_prepare_debian.html mais améliorée.
+<br>
+<br>
+<div class="st">DONNEES DU SERVEUR (à choisir au départ) :</div>
+<br>
+<table cellpadding="10pt"; border="1";><tbody>
+    <tr><td>Distribution Linux utilisée ici :</td><td>Ubuntu 20.04</td><td>11/2020</td></tr>
+    <tr><td>Nom de la machine :</td><td>ServeurLinux</td><td>15 octets maxi, Attention pour caractères UTF-8 qui dépassent un octet.</td></tr>
+    <tr><td>Adresse IP du serveur :</td><td>192.168.1.200</td><td></td></tr>
+    <tr><td>Adresse IP de la passerelle (qui fournit Internet) :</td><td>192.168.1.1</td><td></td></tr>
+    <tr><td>Terminaison du suffixe DNS :</td><td> .lan</td><td>Ici pas de DNS d'entreprise ou de domaine acheté, .local réservé par Apple !!!!!</td></tr>
+    <tr><td>Domaine de recherche : </td><td>btscpi.lan</td><td></td></tr>
+    <tr><td>REALM :</td><td>BTSCPI.LAN</td><td></td></tr>
+    <tr><td>FQDN :</td><td>ServeurLinux.btscpi.lan</td><td>Fully Qualified Domain Name, max 63 octets / étiquette, max 255 octets / nom domaine complet </td></tr>
+</tbody></table>
+<br>
+<div class="st">CONFIGURER LE NOM DNS :</div>
+<br>
+a/° Modifier le fichier /etc/hostname et mettre le FQDN du serveur <br>
+<br>
+<div class="code">
+    # srvads.mydomain.lan<br>
+    LinuxServer.btscpi.lan
+</div>
+<br>
+b/° Modifier le fichier /etc/hosts et y mettre le FQDN et nom court<br>
+<br>
+<div class="code">
+    # ne pas modifier la ou les lignes concernant localhost<br>
+    192.168.1.200 LinuxServer.btscpi.lan LinuxServer
+</div>
+<br>
+<div class="st">CONFIGURER L'ADRESSE IP :</div>
+<br>
+Pour configurer un serveur samba il faut une adresse IP fixe.
+<br>
+<br>
+<div class="code">ip addr</div>
+ou
+<div class="code">ifconfig -a</div>
+<br>
+
+permettent d'obtenir le nom des interfaces et l'état de celles-ci.<br>
+
+Pour configurer le réseau il existe plusieurs gestionnaires de connexion sous linux ( NetworkManager(Ubuntu),NetPlan (Ubuntu 18.04 +),  ifup (Debian), ....)
+
+Configuration classique : les fichiers sont dans /etc/network/interfaces
+
+Pour éviter les conflits on désactive les outils graphiques : 
+
+apt remove network-manager wicd #debian
+
+apt-get remove network-manager wicd #Ubuntu
+
+Exemple de fichier /etc/network/interfaces
+
+# /etc/network/interfaces
+
+auto eth0
+
+iface eth0 inet static
+
+  address 192.168.0.200/24
+
+  gateway 192.168.0.1
+
+
+
+NetworkManager :  On utilise l'interface graphique
+
+NetPlan : les fichiers sont dans /etc/netplan/*.yaml
+
+Exemple de fichier de config netPlan, cat /etc/netplan/*.yaml
+
+# Let NetworkManager manage all devices on this system
+
+network:
+
+	version: 2
+
+	renderer:  NetworkManager
+
+Finalement ici c'est NetworkManager qui gère !!!!!
+
+Attention si NetworkManager tourne, le fichier /etc/resolv.conf change sans arrêt ce qui va rendre impossible le fonctionnement du DNS de Samba.
+
+On passe à une gestion par networkd en modifiant l'option 'renderer' :
+
+# This file describes the network interfaces available on your system
+
+# For more information, see netplan(5).
+
+network:
+
+  version: 2
+
+  renderer: networkd
+
+  ethernets:
+
+    enp0s31f6:
+
+      dhcp4: yes
+
+Ici dhcp sur l'interface enp0s31f6
+
+network:
+
+    ethernets:
+
+        eth0:
+
+            addresses: [192.168.1.200/24]
+
+            gateway4: 192.168.1.1
+
+            nameservers:
+
+                addresses: [8.8.8.8, 8.8.4.4]
+
+            dhcp4: false
+
+            dhcp6: false
+
+    version: 2
+
+Application des modifications :
+<br>
+<div class="code">
+    sudo netplan apply<br>
+    systemctl restart systemd-networkd
+</div>
+<br>
+ou
+<br><br>
+<div class="code">reboot</div>
+<br>
+<div class="st">AUTRES CONFIGURATIONS : </div>
+<br>
+Langue du système :  En anglais pour faciliter la recherche de problèmes dans les logs<br><br>
+<div class="code">
+    apt-get install -y locales-all<br>
+    localectl set-locale LANG=en_US.utf8<br>
+    localectl status<br>
+</div>
+<br>
+Désactiver le demon Avahi (peut perturber la resolution des noms<br><br>
+<div class="code">
+    systemctl stop avahi-daemon.service avahi-daemon.socket<br>
+    systemctl disable avahi-daemon.service avahi-daemon.socket
+</div>
+
+<br>
+Mettre a jour et installer des paquets indispensables<br><br>
+<div class="code">
+    apt-get update -y<br>
+    apt-get install -y wget sudo screen nmap telnet tcpdump rsync net-tools dnsutils htop apt-transport-https vim gnupg
+</div>
+<br>
 </body>
 </html>

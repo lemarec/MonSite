@@ -4,6 +4,14 @@
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+div.st{
+    font-size: 22pt;
+    color: #0000FF;
+}
+div.code{
+    background-color: #47748b;
+    padding-left: 30pt;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
