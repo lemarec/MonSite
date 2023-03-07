@@ -15,16 +15,16 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-Paramètres d'installation => voir page 'préparer sa machine'<br><br>
+Paramétres d'installation => voir page 'préparer sa machine'<br><br>
 <div class="st">
 Installation des ACL et attributs étendus :</div><br>
 
-Afin de pleinement utiliser Samba, il est préférable d'installer les ACL(Access Control List / droits d'accès plus fins que ceux d'UNIX) et les attributs étendus (user_xattr) pour les partitions concernés par Samba.<br><br>
+Afin de pleinement utiliser Samba, il est préférable d'installer les ACL(Access Control List / droits d'accés plus fins que ceux d'UNIX) et les attributs étendus (user_xattr) pour les partitions concernés par Samba.<br><br>
 
 Modification du fichier fstab :<br><br>
 Il faut ajouter, les options acl, user_xattr, barrier=1<br><br> 
-Attention à bien respecter la syntaxe et les virgules, sinon le système ne redémarre pas correctement.<br><br>
-acl = gestion des ACL / user_xattr = attributs étendus / barrier = protection du système des corruptions de fichiers en particulier sur les bases de données tdb<br><br>
+Attention Ã  bien respecter la syntaxe et les virgules, sinon le systéme ne redémarre pas correctement.<br><br>
+acl = gestion des ACL / user_xattr = attributs étendus / barrier = protection du systéme des corruptions de fichiers en particulier sur les bases de données tdb<br><br>
 Exemple de fichier fstab modifié <br><br>
 <div class="code">
 # /etc/fstab<br>
@@ -94,10 +94,10 @@ ntpsigndsocket /var/lib/samba/ntp_signd<br>
 restrict default mssntp</div><br><br>
 
 Ajouter une ligne contenant "tinker panic 0" afin d'éviter un échec de synchronisation en cas d'offset de temps  trop grand.<br>      
-Ajouter une ligne contenant "restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap nopeer" afin de permettre au réseau local à demander l'heure et les statistiques.<br>
+Ajouter une ligne contenant "restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap nopeer" afin de permettre au réseau local Ã  demander l'heure et les statistiques.<br>
 Ajouter deux lignes afin de permettre aux poste Windows une synchronisation signée (NTP signé) ( "ntpsigndsocket /var/lib/samba/ntp_signd" & "restrict default mssntp" )<br>
 
-Adapter le groupe propriétaire du répertoire qui contient le socket samba nécessaire à l'authentification puis relancer NTP et vérifier son fonctionnement :<br><br>
+Adapter le groupe propriétaire du répertoire qui contient le socket samba nécessaire Ã  l'authentification puis relancer NTP et vérifier son fonctionnement :<br><br>
 <div class="code">
 sudo chgrp ntp /var/lib/samba/ntp_signd<br>
 sudo systemctl restart ntp<br>
@@ -114,14 +114,16 @@ Le fichier /etc/resolv/resolv.conf ou /etc/resolv.conf<br><br>
 search btscpi.lan<br>
 nameserver 127.0.0.1<br>
 </div><br>
-Vérifier que pour l'instant aucun démon ne gère le DNS, sinon le/les désactiver pour éviter les confits avec le DNS de Samba :<br><br>
+Vérifier que pour l'instant aucun démon ne gére le DNS, sinon le/les désactiver pour éviter les confits avec le DNS de Samba :<br><br>
 <div class="code">
 sudo netstat -lnp | grep :53
 </div><br>
+<img src="Images/Samba_4_AD_DC/Linux/Commande netstat 2.jpg" /><br><br>
 ici le démon systemd-resolved effectue la résolution des noms, il ne faut pas lancer Samba avant de le désactiver, de plus le fichier /etc/resolv.conf est un lien.<br><br>
-<div class="code">
-sudo systemctl stop systemd-revolved.service # a faire après sinon plus d'internet<br>
-sudo systemctl disable systemd-resolved.service # a faire après<br>
+<img src="Images/Samba_4_AD_DC/Linux/Fichir resolv_conf.jpg" /><br>
+<br><div class="code">
+sudo systemctl stop systemd-revolved.service # a faire aprés sinon plus d'internet<br>
+sudo systemctl disable systemd-resolved.service # a faire aprés<br>
 sudo mv /etc/resolv.conf /etc/resolv.conf.old<br>
 sudo touch /etc/resolv.conf<br>
 sudo nano /etc/resolv.conf
@@ -132,7 +134,7 @@ Taper le fichier /etc/resolv.conf définit plus haut
 <div class="code">
 sudo apt-get install krb5-config krb5-user<br>
 </div>
-Il faut répondre à trois questions :<br>
+Il faut répondre Ã  trois questions :<br>
 <div class="code">
 Le realm ou royaume : BTSCPI.LAN<br>
 
@@ -141,89 +143,87 @@ Serveur Kerberos du royaume :  ServeurLinux.btscpi.lan<br>
 Serveur administratif du royaume kerberos : ServeurLinux.btscpi.lan<br>
 </div>
 <br><br>
-<div class="st">Installation de Samba :</div><br><br>
-sudo apt-get install samba smbclient winbind libnss-winbind ldb-tools python3-crypto
+<div class="st">Installation des paquets Samba :</div><br>
+<div class="code">sudo apt-get install samba smbclient winbind libnss-winbind ldb-tools python3-crypto</div><br>
 
-L'extension 'libnss-winbind' est nécessaire pour le bon fonctionnement des partages avancés (sécurité).
+L'extension 'libnss-winbind' est nécessaire pour le bon fonctionnement des partages avancés (sécurité).<br>
 
-Sauvegarder l'ancienne configuration de samba
-
-sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
+Sauvegarder l'ancienne configuration de samba :<br><br>
+<div class="code">sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old</div>
 <br><br>
-<div class="st">Promouvoir le serveur en contrôleur de domaine :</div><br><br>
-Initialisation/provisionnement de samba :
+<div class="st">Promouvoir le serveur en contrôleur de domaine :</div><br>
+Initialisation/provisionnement de samba :<br><br>
+<div class="code">sudo samba-tool domain provision --use-rfc2307 --interactive</div>
+<br>
 
-sudo samba-tool domain provision --use-rfc2307 --interactive
+2 options : <b>--use-rfc2307</b> active les atttributs POSIXX, crée les information NIS dans l'AD / <b>--interactif</b> permet de répondre aux questions sur la configuration.<br><br>
 
-2 options : --use-rfc2307 active les atttributs POSIXX, crée les information NIS dans l'AD / --interactif permet de répondre aux questions sur la configuration
+il faut prévoir le nom du Realm, le domaine, le rôle du serveur, le type de DNS, l'IP du serveur DNS forwarder (DNS pour internet)  et le mot de passe administrateur?<br><br>
 
-il faut prévoir le nom du Realm, le domaine, le rôle du serveur, le type de DNS, l'IP du serveur DNS forwarder (DNS pour internet)  et le mot de passe administrateur
+Ici il faut rentrer <b>BTSCPI.LAN</b> puis <b>BTSCPI</b>, <b></b>dc, <b>SAMBA_INTERNAL</b>, <b>192.168.1.1</b>, <br><br>
 
-Ici il faut rentrer BTSCPI.LAN puis BTSCPI, dc, SAMBA_INTERNAL, 192.168.1.1, 
+Que faire si l'on se trompe ? Ou si l'on veut changer plusieurs paramétres ? On va relancer la même commande mais avant il faut réinitialiser les fichiers de la base de donnée :<br><br>
+<div class="code">sudo rm /var/lib/samba/private/*</div>
+<br>
 
-Que faire si l'on se trompe ? Ou si l'on veut changer plusieurs paramètres ? On va relancer la même commande mais avant il faut réinitialiser les fichiers de la base de donnée :
+Le fichier généré par la commande "sudo samba-tool domain provision" ressemble Ã  celui présenté ci-dessous (sans la ligne 'username map') :<br><br>
+<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 smb.conf.jpg" /><br>
 
-sudo rm /var/lib/samba/private/*
+Désactivation du Listener DNS :<br>
 
-Le fichier généré par la commande "sudo samba-tool domain provision" ressemble à celui présenté ci-dessous (sans la ligne 'username map') :
+Editer le fichier /etc/systemd/resolved.conf<br><br>
 
+Décommenter la ligne DNSSTUBListener<br>
 
-Désactivation du Listener DNS :
+Désactiver le service systemd-resolv (ne pas le faire avant l'installation des paquets samba car cela coupe internet) :<br>
 
-Éditer le fichier /etc/systemd/resolved.conf
+sudo systemctl stop systemd-revolved.service<br>
+sudo systemctl disable systemd-resolved.service<br>
 
-Décommenter la ligne DNSSTUBListener
+Arrêt de désactivation des anciens service :<br>
+sudo systemctl stop smbd nmbd winbindd smb nmb winbind<br>
 
-Désactiver le service systemd-resolv (ne pas le faire avant l'installation des paquets samba car cela coupe internet) :
+sudo systemctl disable smbd nmbd winbindd smb nmb winbind<br>
 
-sudo systemctl stop systemd-revolved.service
+Les erreurs affichées ne sont pas graves.<br>
 
-sudo systemctl disable systemd-resolved.service
+Démarrage de Samba :<br>
 
-Arrêt de désactivation des anciens service :
-sudo systemctl stop smbd nmbd winbindd smb nmb winbind
+sudo systemctl stop samba.service # ou sudo systemctl stop smbdervice<br>
 
-sudo systemctl disable smbd nmbd winbindd smb nmb winbind
+sudo systemctl unmask samba-ad-dc.service<br>
 
-Les erreurs affichées ne sont pas graves.
+sudo systemctl start samba-ad-dc.service<br>
 
-Démarrage de Samba :
+les processus démarrés par samba :<br>
 
-sudo systemctl stop samba.service # ou sudo systemctl stop smbdervice
+sudo samba-tool processes<br>
 
-sudo systemctl unmask samba-ad-dc.service
+Service:                PID <br>
 
-sudo systemctl start samba-ad-dc.service
+-----------------------------<br>
 
-les processus démarrés par samba :
+dnsupdate                959<br>
 
-sudo samba-tool processes
+nbt_server               933<br>
 
-Service:                PID 
+rpc_server               932<br>
 
------------------------------
+cldap_server             942<br>
 
-dnsupdate                959
+winbind_server           949<br>
 
-nbt_server               933
+kdc_server               943<br>
 
-rpc_server               932
+samba                      0<br>
 
-cldap_server             942
+dreplsrv                 948<br>
 
-winbind_server           949
+kccsrv                   956<br>
 
-kdc_server               943
+ldap_server              938<br>
 
-samba                      0
-
-dreplsrv                 948
-
-kccsrv                   956
-
-ldap_server              938
-
-Le status de samba
+Le status de samba<br>
 
 sudo systemctl status samba-ad-dc.service
 
@@ -245,22 +245,22 @@ ou
 sudo dig ServeurLinux.btscpi.lan 
 
 Création d'une zone de recherche inverse :
-À partir de l'adresse IP du serveur (192.168.1.200), on peut créer une zone inverse par :
+Ã€ partir de l'adresse IP du serveur (192.168.1.200), on peut créer une zone inverse par :
 
 samba-tool dns zonecreate LinuxMate 1.168.192.in-addr.arpa --username=administrator
 
 LinuxMate est le nom du serveur.
 
-1.168.192 est en ordre inversé par rapport à 192.168.1
+1.168.192 est en ordre inversé par rapport Ã  192.168.1
 
-En cas de problème de DNS :
+En cas de probléme de DNS :
 On peut s'aider de l'encadré "!" sous le chapitre 4.2 Initialisation de samba sur la page.
 
 Ex : Correction de l'IP du serveur mal enregistrée
 
 sudo samba-tool dns update SRV btscpi.lan SRV A 192.168.1.50 192.168.1.220 -U administrator
 
-SRV est le nom du serveur, btscpi.lan est la zone du DNS, 192.168.1.50 serait la mauvaise adresse enregistrée, 192.168.1.220 serait l'adresse à mettre à la place de 192.168.1.50 
+SRV est le nom du serveur, btscpi.lan est la zone du DNS, 192.168.1.50 serait la mauvaise adresse enregistrée, 192.168.1.220 serait l'adresse Ã  mettre Ã  la place de 192.168.1.50 
 
 Test de connexion :
 
@@ -286,7 +286,7 @@ smbclient //localhost/netlogon -UAdministrator -c 'ls'
 <div class="st">
 Configuration de NSS :
 </div><br><br>
-Le Name Service Switch (NSS) autorise le remplacement des traditionnels fichiers Unix de configuration (par exemple /etc/passwd, /etc/group, /etc/hosts) par une ou plusieurs bases de données centralisées, les mécanismes utilisés pour accéder à ces bases étant configurables. (Extrait Wikipedia)<br>
+Le Name Service Switch (NSS) autorise le remplacement des traditionnels fichiers Unix de configuration (par exemple /etc/passwd, /etc/group, /etc/hosts) par une ou plusieurs bases de données centralisées, les mécanismes utilisés pour accéder Ã  ces bases étant configurables. (Extrait Wikipedia)<br>
 <br><br>
 
 Il faut avoir installé libnss-winbind.<br><br>
@@ -294,7 +294,7 @@ Il faut avoir installé libnss-winbind.<br><br>
 Nous allons ajouter la possibilité d'utiliser Winbind en plus des fichiers passwd et group afin d'accéder aux utilisateur de l'active Directory.<br>
 <br><br>
 
-Éditer le fichier de configuration de NSS :
+éditer le fichier de configuration de NSS :
 <br><br>
 <div class="code">
 sudo nano /etc/nsswitch.conf
@@ -306,22 +306,24 @@ group:		files	winbind
 </div>
 <br><br>
 <div class="st">
-Démarrer le service Samba :<br>
+Démarrer le service Samba :<br><br>
 </div>
 <div class="code">
 sudo systemctl restart samba-ad-dc.service</div>
 <br>
-Vérification du bon fonctionnement de NSS : Les commandes suivantes doivent retourner les utilisateurs,  groupes et l'information d'un compte AD reçu par winbind <br><br>
+Vérification du bon fonctionnement de NSS : Les commandes suivantes doivent retourner les utilisateurs,  groupes et l'information d'un compte AD reÃ§u par winbind <br><br>
+<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo.jpg" />
 <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo -i.jpg" />
 <div class="st">
 Permettre aux clients d'avoir Internet :</div> <br><br>
 Un exemple de configuration est donné sur la page "Configuration de test avec Virtualbox"<br><br>
-On peut observer les droits d'un répertoire crée au moment de la provision de samba :<br><br>
+On peut observer les droits d'un répertoire cré au moment de la provision de samba :<br><br>
 <div class="code">
 sudo ls -al /var/lib/samba/sysvol<br>
-</div>
+</div><br>
+<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 ls -al sysvol.jpg" />
 <br>
 pour le dossier sysvol et le sous dossier btscpi.lan on peut remarquer un groupe inhabituel : BUILTIN\administrator qui est un groupe de l'AD et pas un groupe Unix.<br>
-Si NSS ne fonctionne pas ou est mal configuré vous aurez un nombre à la place de BUILTIN\administrator (ne pas oublier d'installer libnss-winbind)<br><br>
+Si NSS ne fonctionne pas ou est mal configuré vous aurez un nombre Ã  la place de BUILTIN\administrator (ne pas oublier d'installer libnss-winbind)<br><br>
   </body>
 </html>
