@@ -12,6 +12,11 @@ div.code{
     background-color: #06a4b9;
     padding-left: 30pt;
 }
+div.link{
+    font-size: 16pt;
+    text-decoration-line: underline;
+    color: #0000FF
+}
 
 body {
     font-family: 'Poppins', sans-serif;
