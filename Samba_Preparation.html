@@ -16,6 +16,7 @@
 <a href="#2"><div class="link">2 - CONFIGURER LE NOM DNS :</div>
 <a href="#3"><div class="link">3 - CONFIGURER L'ADRESSE IP :</div>
 <a href="#4"><div class="link">4 - AUTRES CONFIGURATIONS :</div><br>
+<div class="line"></div>
 
 <div id="1">
     <div class="st">1 - DONNEES DU SERVEUR (à choisir au départ) :</div>
@@ -30,14 +31,12 @@
         <tr><td>REALM :</td><td>BTSCPI.LAN</td><td></td></tr>
         <tr><td>FQDN :</td><td>ServeurLinux.btscpi.lan</td><td>Fully Qualified Domain Name, max 63 octets / étiquette, max 255 octets / nom domaine complet </td></tr>
     </tbody></table>
-    <br>
 </div>
 
 
 <div id="2">
     <div class="st">2 - CONFIGURER LE NOM DNS :</div>
-    <br>
-    a/° Modifier le fichier /etc/hostname et mettre le FQDN du serveur <br>
+        a/° Modifier le fichier /etc/hostname et mettre le FQDN du serveur <br>
     <br>
     <div class="code">
         # srvads.mydomain.lan<br>
@@ -49,106 +48,94 @@
     <div class="code">
         # ne pas modifier la ou les lignes concernant localhost<br>
         192.168.1.200 LinuxServer.btscpi.lan LinuxServer
-    </div><br>
+    </div>
 </div>
 
 
 <div id="3">
-    <div class="st">3 - CONFIGURER L'ADRESSE IP :</div>
-    <br>
+    <div class="st">
+        3 - CONFIGURER L'ADRESSE IP :</div>
     Pour configurer un serveur samba il faut une adresse IP fixe.
     <br>
     <br>
     <div class="code">ip addr</div>
     ou
     <div class="code">ifconfig -a</div>
-    <br>
-
-    permettent d'obtenir le nom des interfaces et l'état de celles-ci.<br>
-
+    <p>
+    permettent d'obtenir le nom des interfaces et l'état de celles-ci.</p>
+    <p>
     Pour configurer le réseau il existe plusieurs gestionnaires de connexion sous linux ( NetworkManager(Ubuntu),NetPlan (Ubuntu 18.04 +),  ifup (Debian), ....)
-
-    Configuration classique : les fichiers sont dans /etc/network/interfaces
-
-    Pour éviter les conflits on désactive les outils graphiques : 
-
-    apt remove network-manager wicd #debian
-
-    apt-get remove network-manager wicd #Ubuntu
-
-    Exemple de fichier /etc/network/interfaces
-
-    # /etc/network/interfaces
-
-    auto eth0
-
-    iface eth0 inet static
-
-    address 192.168.0.200/24
-
-    gateway 192.168.0.1
-
-
-    NetworkManager :  On utilise l'interface graphique
-
-    NetPlan : les fichiers sont dans /etc/netplan/*.yaml
-
-    Exemple de fichier de config netPlan, cat /etc/netplan/*.yaml
-
-    # Let NetworkManager manage all devices on this system
-
-    network:
-
-        version: 2
-
-        renderer:  NetworkManager
-
-    Finalement ici c'est NetworkManager qui gère !!!!!
-
-    Attention si NetworkManager tourne, le fichier /etc/resolv.conf change sans arrêt ce qui va rendre impossible le fonctionnement du DNS de Samba.
-
-    On passe à une gestion par networkd en modifiant l'option 'renderer' :
-
-    # This file describes the network interfaces available on your system
-
-    # For more information, see netplan(5).
-
-    network:
-
-    version: 2
-
-    renderer: networkd
-
-    ethernets:
-
-        enp0s31f6:
-
-        dhcp4: yes
-
-    Ici dhcp sur l'interface enp0s31f6
-
-    network:
-
-        ethernets:
-
-            eth0:
-
-                addresses: [192.168.1.200/24]
-
-                gateway4: 192.168.1.1
-
-                nameservers:
-
-                    addresses: [8.8.8.8, 8.8.4.4]
-
-                dhcp4: false
-
-                dhcp6: false
-
-        version: 2
-
-    Application des modifications :
+    </p>
+    <p>
+    <b><u>Configuration classique</u></b> : les fichiers sont dans /etc/network/interfaces
+    </p>
+    <p>
+    Pour éviter les conflits on désactive les outils graphiques :
+    </p> 
+        <div class="code">
+            apt remove network-manager wicd #debian<br>
+            apt-get remove network-manager wicd #Ubuntu<br>
+        </div>
+    <p>Exemple de fichier /etc/network/interfaces
+    </p>
+    <div class="code">
+        # /etc/network/interfaces<br>
+        auto eth0<br>
+        iface eth0 inet static<br>
+        &nbsp; &nbsp; address 192.168.0.200/24<br>
+        &nbsp; &nbsp; gateway 192.168.0.1<br>
+    </div>
     <br>
+    <p>
+    <b><u>NetworkManager</u></b> :  On utilise l'interface graphique
+    </p>
+    <p>
+    <b><u>NetPlan</u></b> : les fichiers sont dans /etc/netplan/*.yaml
+    </p>
+    <p>
+    Exemple de fichier de config netPlan, cat /etc/netplan/*.yaml</p>
+    <div class="code">
+        # Let NetworkManager manage all devices on this system<br>
+        network:<br>
+        &nbsp; &nbsp;     version: 2<br>
+        &nbsp; &nbsp;     renderer:  NetworkManager
+    </div>
+    <p>
+    Finalement ici c'est NetworkManager qui gère !!!!!</p>
+    <p>
+    Attention si NetworkManager tourne, le fichier /etc/resolv.conf change sans arrêt ce qui va rendre impossible le fonctionnement du DNS de Samba.
+    </p>
+    <p>
+    On passe à une gestion par networkd en modifiant l'option 'renderer' :
+    </p>
+    <div class="code">
+    # This file describes the network interfaces available on your system<br>
+    # For more information, see netplan(5).<br>
+    network:<br>
+    &nbsp; &nbsp;version: 2<br>
+    &nbsp; &nbsp;renderer: networkd<br>
+    &nbsp; &nbsp;ethernets:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp;  enp0s31f6:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; dhcp4: yes<br>
+    </div>
+    <p>
+    Ici dhcp sur l'interface enp0s31f6
+    </p>
+    <div class="code">
+    network:<br>
+    &nbsp; &nbsp;     ethernets:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp;         eth0:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;             addresses: [192.168.1.200/24]<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;             gateway4: 192.168.1.1<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;             nameservers:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;                 addresses: [8.8.8.8, 8.8.4.4]<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;             dhcp4: false<br>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;             dhcp6: false<br>
+    &nbsp; &nbsp;     version: 2<br>
+    </div>
+    <p>
+    Application des modifications :
+    </p>
     <div class="code">
         sudo netplan apply<br>
         systemctl restart systemd-networkd
@@ -157,13 +144,13 @@
     ou
     <br><br>
     <div class="code">reboot</div>
-    <br>
 </div>
 
 
 <div id="4">
-    <div class="st">4 - AUTRES CONFIGURATIONS :</div>
-    <br>
+    <div class="st">
+        4 - AUTRES CONFIGURATIONS :
+    </div>
     Langue du système :  En anglais pour faciliter la recherche de problèmes dans les logs<br><br>
     <div class="code">
         apt-get install -y locales-all<br>
