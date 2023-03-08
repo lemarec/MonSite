@@ -28,11 +28,9 @@
     <a href="#7"><div class="link">7 - Configuration de NSS :</div></a>
     <a href="#8"><div class="link">8 - Démarrer le service Samba :</div></a>
     <a href="#9"><div class="link">9 - Permettre aux clients d'avoir Internet :</div></a>
-    <br /><br />
 
     <div id="1">
       <div class="st">1 - Installation des ACL et attributs étendus :</div>
-      <br />
 
       Afin de pleinement utiliser Samba, il est préférable d'installer les
       ACL(Access Control List / droits d'accés plus fins que ceux d'UNIX) et les
@@ -87,12 +85,10 @@
         # file: test.txt<br />
         security.secName="secValue"<br />
       </div>
-      <br /><br />
     </div>
 
     <div id="2">
       <div class="st">2 - Synchronisation des horloges :</div>
-      <br /><br />
       Il faut une bonne synchronisation des horloges entre les postes clients et
       le serveur de l'AD<br /><br />
       <div class="code">sudo apt-get install ntp ntpstat ntpdate</div>
@@ -135,12 +131,10 @@
         sudo ntpq -p<br />
         sudo ntpstat
       </div>
-      <br /><br />
     </div>
 
     <div id="3">
       <div class="st">3 - Configuration du DNS :</div>
-      <br /><br />
       Ici on va utiliser le DNS interne de Samba, cette option peut être
       changée.<br /><br />
 
@@ -172,12 +166,10 @@
       </div>
       <br />
       Taper le fichier /etc/resolv.conf définit plus haut
-      <br /><br />
     </div>
 
     <div id="4">
       <div class="st">4 - Installation de Kerberos :</div>
-      <br /><br />
       <div class="code">sudo apt-get install krb5-config krb5-user<br /></div>
       Il faut répondre à  trois questions :<br />
       <div class="code">
@@ -185,12 +177,10 @@
         Serveur Kerberos du royaume : ServeurLinux.btscpi.lan<br />
         Serveur administratif du royaume kerberos : ServeurLinux.btscpi.lan<br />
       </div>
-      <br /><br />
     </div>
 
     <div id="5">
       <div class="st">5 - Installation des paquets Samba :</div>
-      <br />
       <div class="code">
         sudo apt-get install samba smbclient winbind libnss-winbind ldb-tools
         python3-crypto
@@ -204,7 +194,6 @@
       <div class="code">
         sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
       </div>
-      <br /><br />
     </div>
 
     <div id="6">
@@ -212,7 +201,6 @@
         6 - Promouvoir le serveur en contrôleur de domaine & tester le
         fonctionnement:
       </div>
-      <br />
       Initialisation/provisionnement de samba :<br /><br />
       <div class="code">
         sudo samba-tool domain provision --use-rfc2307 --interactive
@@ -339,12 +327,10 @@
         smbclient -L localhost -U%<br />
         smbclient //localhost/netlogon -UAdministrator -c 'ls'
       </div>
-      <br /><br />
     </div>
 
     <div id="7">
       <div class="st">7 - Configuration de NSS :</div>
-      <br /><br />
       Le Name Service Switch (NSS) autorise le remplacement des traditionnels
       fichiers Unix de configuration (par exemple /etc/passwd, /etc/group,
       /etc/hosts) par une ou plusieurs bases de données centralisées, les
@@ -367,11 +353,10 @@
         passwd: files winbind<br />
         group: files winbind
       </div>
-      <br /><br />
     </div>
 
     <div id="8">
-      <div class="st">8 - Démarrer le service Samba :<br /><br /></div>
+      <div class="st">8 - Démarrer le service Samba :</div>
       <div class="code">sudo systemctl restart samba-ad-dc.service</div>
       <br />
       Vérification du bon fonctionnement de NSS : Les commandes suivantes
@@ -379,9 +364,10 @@
       AD reà§u par winbind <br /><br />
       <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo.jpg" />
       <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo -i.jpg" />
+    </div>
 
-      <div class="st" id="9">9 - Permettre aux clients d'avoir Internet :</div>
-      <br /><br />
+    <div id="9">
+    <div class="st">9 - Permettre aux clients d'avoir Internet :</div>
       Un exemple de configuration est donné sur la page "Configuration de test
       avec Virtualbox"<br /><br />
       On peut observer les droits d'un répertoire cré au moment de la provision

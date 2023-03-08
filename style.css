@@ -5,6 +5,8 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 div.st{
+    padding-top: 14pt;
+    padding-bottom: 14pt;
     font-size: 22pt;
     color: #0000FF;
 }
