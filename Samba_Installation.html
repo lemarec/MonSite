@@ -26,6 +26,8 @@ Paramétres d'installation => voir page 'préparer sa machine'<br><br>
 <a href="#8"><div class="link">8 - Démarrer le service Samba :</div></a>
 <a href="#9"><div class="link">9 - Permettre aux clients d'avoir Internet :</div></a>
 <br><br>
+
+
 <div id="1">
 <div class="st">
 1 - Installation des ACL et attributs étendus :</div><br>
@@ -306,27 +308,27 @@ group:		files	winbind
 </div>
 
 <div id="8">
-<div class="st">
-8 - Démarrer le service Samba :<br><br>
-</div>
-<div class="code">
-sudo systemctl restart samba-ad-dc.service</div>
-<br>
-Vérification du bon fonctionnement de NSS : Les commandes suivantes doivent retourner les utilisateurs,  groupes et l'information d'un compte AD reà§u par winbind <br><br>
-<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo.jpg" />
-<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo -i.jpg" />
+  <div class="st">
+  8 - Démarrer le service Samba :<br><br>
+  </div>
+  <div class="code">
+  sudo systemctl restart samba-ad-dc.service</div>
+  <br>
+  Vérification du bon fonctionnement de NSS : Les commandes suivantes doivent retourner les utilisateurs,  groupes et l'information d'un compte AD reà§u par winbind <br><br>
+  <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo.jpg" />
+  <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 wbinfo -i.jpg" />
 
-<div class="st" id="9">
-9 - Permettre aux clients d'avoir Internet :</div> <br><br>
-Un exemple de configuration est donné sur la page "Configuration de test avec Virtualbox"<br><br>
-On peut observer les droits d'un répertoire cré au moment de la provision de samba :<br><br>
-<div class="code">
-sudo ls -al /var/lib/samba/sysvol<br>
-</div><br>
-<img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 ls -al sysvol.jpg" />
-<br>
-pour le dossier sysvol et le sous dossier btscpi.lan on peut remarquer un groupe inhabituel : BUILTIN\administrator qui est un groupe de l'AD et pas un groupe Unix.<br>
-Si NSS ne fonctionne pas ou est mal configuré vous aurez un nombre à  la place de BUILTIN\administrator (ne pas oublier d'installer libnss-winbind)<br><br>
+  <div class="st" id="9">
+  9 - Permettre aux clients d'avoir Internet :</div> <br><br>
+  Un exemple de configuration est donné sur la page "Configuration de test avec Virtualbox"<br><br>
+  On peut observer les droits d'un répertoire cré au moment de la provision de samba :<br><br>
+  <div class="code">
+  sudo ls -al /var/lib/samba/sysvol<br>
+  </div><br>
+  <img src="Images/Samba_4_AD_DC/Linux/Ubuntu 20.04 ls -al sysvol.jpg" />
+  <br>
+  pour le dossier sysvol et le sous dossier btscpi.lan on peut remarquer un groupe inhabituel : BUILTIN\administrator qui est un groupe de l'AD et pas un groupe Unix.<br>
+  Si NSS ne fonctionne pas ou est mal configuré vous aurez un nombre à  la place de BUILTIN\administrator (ne pas oublier d'installer libnss-winbind)<br><br>
 </div>
   </body>
 </html>
