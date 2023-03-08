@@ -24,11 +24,11 @@ Paramétres d'installation => voir page 'préparer sa machine'<br><br>
 <a href="#6"><div class="link">6 - Promouvoir le serveur en contrôleur de domaine et tester le fonctionnement :</div></a>
 <a href="#7"><div class="link">7 - Configuration de NSS :</div></a>
 <a href="#8"><div class="link">8 - Démarrer le service Samba :</div></a>
-<a href="#9"><div class="link">9 - Permettre aux clients d'avoir Internet :</div>
+<a href="#9"><div class="link">9 - Permettre aux clients d'avoir Internet :</div></a>
 <br><br>
-
-<div class="st" id="1">
-Installation des ACL et attributs étendus :</div><br>
+<div id="1">
+<div class="st">
+1 - Installation des ACL et attributs étendus :</div><br>
 
 Afin de pleinement utiliser Samba, il est préférable d'installer les ACL(Access Control List / droits d'accés plus fins que ceux d'UNIX) et les attributs étendus (user_xattr) pour les partitions concernés par Samba.<br><br>
 
@@ -44,13 +44,12 @@ UUID=8059560e-4a78-445b-a363-b3c197b4c7ea      /      ext4      defaults,acl,use
 Il faut soit rebooter soit effectuer la commande<br><br>
 <div class="code">
   sudo mount - o remount  / 
-</div>
-<br><br>
+</div><br><br>
 Vérification des modifications ACL et attributs étendus :<br><br>
 - Installation des paquets logiciels :<br><br>
 <div class="code">
-sudo apt-get install acl attr</div><br>
-
+sudo apt-get install acl attr
+</div><br>
 - Test des ACL :<br><br>
 <div class="code">
 touch testacl.txt<br>
@@ -59,14 +58,7 @@ getfacl testacl.txt<br>
 </div><br><br>
 Résultats des commandes :<br><br>
 <div class="code">
-# file: test.txt<br>
-# owner: user1<br>
-# group: user1<br>
-user::rw-<br>
-group::rw-<br>
-group:adm:rwx<br>
-mask::rw-<br>
-other::r--<br>
+# file: test.txt<br># owner: user1<br># group: user1<br>user::rw-<br>group::rw-<br>group:adm:rwx<br>mask::rw-<br>other::r--<br>
 </div><br><br>
 - Test des attributs étendus :<br><br>
 <div class="code">
@@ -84,22 +76,19 @@ user.userName="userValue"<br>
 security.secName="secValue"<br>
 </div>
 <br><br>
+</div>
 
-
-<div class="st" id="2">Synchronisation des horloges :</div><br><br>
+<div id="2">
+<div class="st">2 - Synchronisation des horloges :</div><br><br>
 Il faut une bonne synchronisation des horloges entre les postes clients et le serveur de l'AD<br><br>
 <div class="code">
 sudo apt-get install ntp ntpstat ntpdate</div><br>
-
 Le fichier /etc/ntp.conf (version simplifiée)<br><br>
 <div class="code">
 driftfile      /var/lib/ntp/ntp.drift<br>
 logfile        /var/log/ntp<br> 
 # Specify one or more NTP servers.<br>
-server 0.ubuntu.pool.ntp.org<br>
-server 1.ubuntu.pool.ntp.org<br> 
-server 2.ubuntu.pool.ntp.org<br>
-server 3.ubuntu.pool.ntp.org<br>
+server 0.ubuntu.pool.ntp.org<br>server 1.ubuntu.pool.ntp.org<br>server 2.ubuntu.pool.ntp.org<br>server 3.ubuntu.pool.ntp.org<br>
 # By default, exchange time with everybody, but don't allow configuration.<br>
 restrict default kod notrap nomodify nopeer mssntp<br>
 # Local users may interrogate the ntp server more closely.<br>
@@ -123,8 +112,10 @@ sudo ntpstat
 </div>
 <br><br>
 
+</div>
 
-<div class="st" id="3">Configuration du DNS :</div><br><br>
+<div id="3">
+<div class="st">3 - Configuration du DNS :</div><br><br>
 Ici on va utiliser le DNS interne de Samba, cette option peut être changée.<br><br>
 
 Le fichier /etc/resolv/resolv.conf ou /etc/resolv.conf<br><br>
@@ -148,9 +139,10 @@ sudo nano /etc/resolv.conf
 </div><br>
 Taper le fichier /etc/resolv.conf définit plus haut
 <br><br>
+</div>
 
-
-<div class="st" id="4">4 - Installation de Kerberos :</div><br><br>
+<div id="4">
+<div class="st">4 - Installation de Kerberos :</div><br><br>
 <div class="code">
 sudo apt-get install krb5-config krb5-user<br>
 </div>
@@ -161,9 +153,10 @@ Serveur Kerberos du royaume :  ServeurLinux.btscpi.lan<br>
 Serveur administratif du royaume kerberos : ServeurLinux.btscpi.lan<br>
 </div>
 <br><br>
+</div>
 
-
-<div class="st" id="5">5 - Installation des paquets Samba :</div><br>
+<div id="5">
+<div class="st">5 - Installation des paquets Samba :</div><br>
 <div class="code">sudo apt-get install samba smbclient winbind libnss-winbind ldb-tools python3-crypto</div><br>
 
 L'extension 'libnss-winbind' est nécessaire pour le bon fonctionnement des partages avancés (sécurité).<br>
@@ -171,9 +164,10 @@ L'extension 'libnss-winbind' est nécessaire pour le bon fonctionnement des part
 Sauvegarder l'ancienne configuration de samba :<br><br>
 <div class="code">sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old</div>
 <br><br>
+</div>
 
-
-<div class="st" id="6">6 - Promouvoir le serveur en contrôleur de domaine & tester le fonctionnement:</div><br>
+<div id="6">
+<div class="st">6 - Promouvoir le serveur en contrôleur de domaine & tester le fonctionnement:</div><br>
 Initialisation/provisionnement de samba :<br><br>
 <div class="code">sudo samba-tool domain provision --use-rfc2307 --interactive</div>
 <br>
@@ -282,9 +276,13 @@ Tests par smbclient :<br><br>
 <div class="code">
 smbclient -L localhost -U%<br>
 smbclient //localhost/netlogon -UAdministrator -c 'ls'</div>
-
 <br><br>
-<div class="st" id="7">
+
+
+</div>
+
+<div id="7">
+<div class="st">
 7 - Configuration de NSS :
 </div><br><br>
 Le Name Service Switch (NSS) autorise le remplacement des traditionnels fichiers Unix de configuration (par exemple /etc/passwd, /etc/group, /etc/hosts) par une ou plusieurs bases de données centralisées, les mécanismes utilisés pour accéder à  ces bases étant configurables. (Extrait Wikipedia)<br>
@@ -305,9 +303,10 @@ passwd:		files	winbind<br>
 group:		files	winbind
 </div>
 <br><br>
+</div>
 
-
-<div class="st" id="8">
+<div id="8">
+<div class="st">
 8 - Démarrer le service Samba :<br><br>
 </div>
 <div class="code">
@@ -328,5 +327,6 @@ sudo ls -al /var/lib/samba/sysvol<br>
 <br>
 pour le dossier sysvol et le sous dossier btscpi.lan on peut remarquer un groupe inhabituel : BUILTIN\administrator qui est un groupe de l'AD et pas un groupe Unix.<br>
 Si NSS ne fonctionne pas ou est mal configuré vous aurez un nombre à  la place de BUILTIN\administrator (ne pas oublier d'installer libnss-winbind)<br><br>
+</div>
   </body>
 </html>
