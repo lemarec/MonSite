@@ -12,92 +12,111 @@
     <a href="#2"><div class="link">2 - Préparation des clients Windows 10 :</div></a>
     <a href="#3"><div class="link">3 - Intégration au domaine des clients Windows 10 :</div></a>
     <a href="#4"><div class="link">4 - Gestion de l'horloge - Temps internet :</div></a>
-
+    <div class="line"></div>
     <div id="1">
         <div class="st">
             1 - Prérequis :
         </div>
-    Avoir un serveur Samba AD (ou Windows serveur) actif et configuré<br>
-    Avoir un compte administrateur sur ce serveur.<br>
+        <p>
+            <ul>
+                <li>Avoir un serveur Samba AD (ou Windows serveur) actif et configuré.</li>
+                <li> Avoir un compte administrateur sur ce serveur.</li>
+            </ul>
+        </p>
     </div>
 
     <div id="2">
         <div class="st">
             2 - Préparation des clients Windows 10 :
         </div>
-    Changer le nom du client
-    
-    Menu démarrer, paramètres. 'Système', en bas à gauche, 'Informations système', sous "spécification de l'appareil', cliquer sur 'Renommer ce PC'
-    
-    
-    Il faut configurer la carte réseau du poste, lui donner une IP sur le sous-réseau du serveur
-    
-    Menu démarrer, paramètres. 'Réseau et Internet', en dessous de 'Paramètres réseau avancés', choisir 'Modifier les options d'adaptateur'
-    
-    Sur la carte réseau affichée, avec le bouton droit sélectionner 'propriétés'
-    
-    Le DNS du client doit être celui du serveur 
-    
-    
-    
-    Cliquer sur 'Protocole Internet Version 4' puis plus bas, 'propriétés'
-    
-    
-    Ici, tous les postes clients auront une adresse qui commence par 192.168.2, le serveur précédemment configuré a pour adresse 192.168.2.100, l'indiquer pour la passerelle et le DNS. Cliquer sur 'Valider les paramètres en quittant' puis 'OK'
+        <p>
+        Changer le nom du client.</p>
+        <p>        
+        Menu démarrer, paramètres. <b>'Système'</b>, en bas à gauche, <b>'Informations système'</b>, sous <b>'spécification de l'appareil'</b>, cliquer sur <b>'Renommer ce PC'</b>.
+        </p>
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 Renommer PC.jpg" />
+        <p>
+            Il faut configurer la carte réseau du poste, lui donner une IP sur le sous-réseau du serveur.
+        </p>
+        <p>
+            Menu démarrer, paramètres. <b>'Réseau et Internet'</b>, en dessous de <b>'Paramètres réseau avancés'</b>, choisir <b>'Modifier les options d'adaptateur'</b>.
+        </p>
+        <p>
+            Sur la carte réseau affichée, avec le bouton droit sélectionner <b>'propriétés'</b>.
+        </p>    
+        
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 config réseau 1.jpg" />
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 config réseau 2.jpg" />
+        <p>
+            Cliquer sur <b>'Protocole Internet Version 4'</b> puis plus bas, <b>'propriétés'</b>.
+        </p>
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 config réseau 3.jpg" />
+        <p>
+            Ici, tous les postes clients auront une adresse qui commence par 192.168.2, le serveur précédemment configuré a pour adresse 192.168.2.100, l'indiquer pour la passerelle et le DNS.
+        </p>
+        <p>
+            Cliquer sur <b>'Valider les paramètres en quittant'</b> puis <b>'OK'</b>.
+        </p>
+        <p>
+            Le DNS du client doit être celui du serveur.
+        </p>
     </div>
 
     <div id="3">
         <div class="st">
             3 - Intégration au domaine des clients Windows 10 :
         </div>
-    Revenir en arrière sur les paramètres jusqu’à 'Comptes', sur le coté choisir 'Accès professionnel ou Scolaire'
-    
-    Cliquer sur '[+] se connecter'
-    
-    
-    Dans la nouvelles fenêtre qui s'ouvre choisir 'Joindre cet appareil a un domaine Active Directory local'
-    
-    Donner le nom du domaine (ici BTSCPI.LAN) puis rentrer login (administrator) et mot de passe de l'administrateur serveur 
-    
-    Ensuite donner le login et le rôle d'un utilisateur (utilisateur standard ou administrateur) qui va utiliser le client
-    
-    Il faut ensuite redémarrer. l'ordinateur sera sur le domaine.
-    
-    
-    Sur Windows 7 la démarche est sensiblement identique, il faut aller dans 'panneau de configuration', 'Système et sécurité', 'Système', a droite du nom de l'ordinateur, cliquer sur 'Modifier les paramètres', cliquer sur 'Modifier' pour renommer ou changer de domaine, membre d'un -> Domaine, remplir le nom de domaine puis 'OK'
+        <p>Revenir en arrière sur les paramètres jusqu’à <b>'Comptes'</b>, sur le coté choisir <b>'Accès professionnel ou Scolaire'</b>.
+        </p>
+        <p>
+        Cliquer sur <b>'[+] se connecter'.
+        </p>
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 Intégration 1.jpg" />
+        <p>
+        Dans la nouvelles fenêtre qui s'ouvre choisir <b>'Joindre cet appareil a un domaine Active Directory local'</b>.
+        </p>
+        <p>
+        Donner le nom du domaine (ici BTSCPI.LAN) puis rentrer login (administrator) et mot de passe de l'administrateur serveur 
+        </p>
+        <p>
+        Ensuite donner le login et le rôle d'un utilisateur (utilisateur standard ou administrateur) qui va utiliser le client
+        </p>
+        <p>
+        Il faut ensuite redémarrer. l'ordinateur sera sur le domaine.
+        </p>
+        <p>
+        Sur Windows 7 la démarche est sensiblement identique, il faut aller dans <b>'panneau de configuration'</b>, <b>'Système et sécurité'</b>, <b>'Système'</b>, a droite du nom de l'ordinateur, cliquer sur <b>'Modifier les paramètres'</b>, cliquer sur <b>'Modifier'</b> pour renommer ou changer de domaine, membre d'un -> Domaine, remplir le nom de domaine puis 'OK'
+        </p>
     </div>
 
-    <div id="4">
+    <p id="4">
         <div class="st">
             4 - Gestion de l'horloge - Temps internet :
         </div>
-    Il faut assurer une bonne synchronisation des horloge des clients avec le serveur Linux.
-    
-    Aller dans le menu redémarrer et taper "cmd", a droite cliquer sur "exécuter en tant d'administrateur"
-    
-    Exécuter les commandes suivantes :
-    
-    w32tm /config /syncfromflags:DOMHIER /update
-    
-    w32tm /resysnc /nowait
-    
-    net stop w32time
-    
-    net start w32time
-    
-    si cela ne marche pas ou s'il y a des erreurs on peut vérifier la configuration par :
-    
-    w32tm /query /source
-    
-    w32tm /monitor
-    
-    On doit parfois utiliser la commande "net time" :
-    
-    net time /set
-    
-    Répondre oui pour forcer la synchronisation.
-    
-    Quelques info ici en plus :   https://social.technet.microsoft.com/Forums/lync/en-US/aebde770-f8a4-41ea-9c34-1425121574b2/what-does-w32tm-query-for-the-time-source?forum=winserver8gen    
+        <p>Il faut assurer une bonne synchronisation des horloge des clients avec le serveur Linux.
+        </p>
+        <p>
+        Aller dans le menu redémarrer et taper "cmd", a droite cliquer sur "exécuter en tant d'administrateur".
+        </p>
+        <p>Exécuter les commandes suivantes :</p>
+        <div class="code">
+            w32tm /config /syncfromflags:DOMHIER /update<br>
+            w32tm /resysnc /nowait<br>
+            net stop w32time<br>
+            net start w32time<br>
+        </div>
+        <p>Si cela ne marche pas ou s'il y a des erreurs on peut vérifier la configuration par :
+        </p>
+        <div class="code">
+            w32tm /query /source<br>
+            w32tm /monitor
+        </div>
+        <p>On doit parfois utiliser la commande "net time" :</p>
+        <div class="code">net time /set</div>    
+        <p>Répondre oui pour forcer la synchronisation.</p>
+        <p>
+        Quelques info ici en plus :   https://social.technet.microsoft.com/Forums/lync/en-US/aebde770-f8a4-41ea-9c34-1425121574b2/what-does-w32tm-query-for-the-time-source?forum=winserver8gen    
+        </p>
     </div>
 </body>
 </html>
