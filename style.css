@@ -10,6 +10,13 @@ div.st{
     font-size: 22pt;
     color: #0000FF;
 }
+div.gt{
+    padding-top: 14pt;
+    padding-bottom: 24pt;
+    font-size: 22pt;
+    font-weight: bold;
+    color: #0000FF;
+}
 div.code{
     padding-top: 4pt;
     padding-bottom: 4pt;

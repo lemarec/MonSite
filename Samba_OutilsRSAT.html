@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation des outils de gestion AD à distance (RSAT)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="gt">
+        Installation des outils de gestion AD à distance (RSAT)
+    </div>
+    <a href="#1"><div class="link">1 - Installation.</div>
+    <a href="#2"><div class="link">2 - Lancement et configuration</div>
+        <div class="line"></div>
+    <div id="1">    
+        <div class="st">1 - Installation :</div>        
+        <p>
+        Pour les versions de Windows  10 avant 1809 : il faut télécharger RSAT sur le site de Microsoft</p>
+        <p>
+        Après la version 1809, RSAT est intégré à Windows 10, il suffit de l'activer.</p>
+        <p>
+        Paramètres Windows / Applications.</p>
+        <p>
+        Fonctionnalités facultatives</p>
+        <p>
+        Cliquer sur "Ajouter une fonctionnalité"</p>
+        <p>
+        sélectionner les fonctionnalités RSAT que vous voulez installer</p>
+        <p>
+        Comme:</p>
+        <p>
+        RSAT: outils de gestion de stratégie de groupe</p>
+    </div>
+    <div id="2">
+        <div class="st">2 - Lancement & Configuration :</div>
+        <p>
+        Il existe plusieurs façon de lancer l'interface, on peut par exemple lancer une console MMC</p>
+        <p>
+        "Touche Windows" + R, taper mmc puis entrée</p>
+        <p>
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 AD MMC 1.jpg" />
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 AD MMC 2.jpg" />
+        Ensuite menu "Fichier", "Ajouter:supprimer un composant logiciel enfichable"</p>
+        
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 AD MMC 3.jpg" />
+        <p>
+        Cliquer dans la liste puis sur 'Ajouter', le choix du composant comporte en plus le choix de la cible (un autre ordinateur), rentrer le nom du serveur Linux Samba 4 ou du Serveur Windows, ici 3 composants classiques :</p>
+        <p>
+        Dossiers partagés</p>
+        <p>
+        Utilisateur et ordinateurs Active Directory</p>
+        <p>
+        Gestion des stratégies de groupe (GPO)</p>
+        <p>
+        ok pour valider et revenir à la console.</p>
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 AD MMC 4.jpg" />
+        <img src="Images/Samba_4_AD_DC/Windows/Win 10 AD MMC 5.jpg" />
+        <p>
+        On peut ensuite enregistrer la configuration sur le bureau pour l'utiliser ultérieurement(menu "Fichier", "Enregistrer sous ...").</p>
+    </div>
+</body>
+</html>
